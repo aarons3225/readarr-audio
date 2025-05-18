@@ -1,0 +1,21 @@
+services:
+  readarr-audio:
+    container_name: readarr-audio
+    image: ghcr.io/hotio/readarr:latest
+    ports:
+      - 8778:8778
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=America/Phoenix
+    volumes:
+      - ./config:/config
+      - /mnt/data:data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+    networks:
+      - media
+networks:
+  media:
+    external: true
